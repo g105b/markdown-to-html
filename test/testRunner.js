@@ -39,7 +39,7 @@ function executeTest(file) {
 			htmlContent = readFile(basename, TYPE_HTML),
 		$$;
 
-		t.equal(htmlContent, markdownToHtml.parse(mdContent));
+		t.equal(markdownToHtml.parse(mdContent), htmlContent);
 		t.end();
 	});
 }
