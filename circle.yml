@@ -2,6 +2,10 @@ machine:
   node:
     version: 0.10.25
 
+dependencies:
+  pre:
+    - npm install tape -g
+
 test:
   override:
     - node ./test/testRunner.js
