@@ -1,7 +1,7 @@
 # markdown-to-html
 The simplest pure JavaScript markdown parser
 
-[![CircleCI](https://img.shields.io/circleci/project/g105b/markdown-to-html.svg?style=flat-square)]
+![CircleCI](https://img.shields.io/circleci/project/g105b/markdown-to-html.svg?style=flat-square)
 
 ## Browser compatibility
 
