@@ -1,6 +1,9 @@
 ;(function() { "use strict";
 
 var
+	BLOCK = "block",
+	INLINE = "inline",
+
 	/**
 	 * Used to attach MarkdownToHtml object to `window` in browser
 	 * context, or as an AMD module where appropriate.
@@ -17,39 +20,67 @@ var
 	parseMap = [
 		{
 			// <h1>
-			pattern: /(#{1,6})(.*)/g,
-			replace: heading,
+			// A line starting with 1-6 hashes.
+			pattern: /(#{1,6})([^\n]+)/g,
+			replace: "<h$L1>$2</h$L1>",
+			type: BLOCK,
 		},
 		{
 			// <p>
-			pattern: /\n([^\n]+)\n/g,
-			replace: paragraph,
+			// Any line surrounded by newlines that doesn't start with
+			// an HTML tag.
+			pattern: /\n(?!<\/?\w+>)([^\n]+)\n/g,
+			replace: "<p>$1</p>",
+			type: BLOCK,
 		},
 		{
 			// <strong>
+			// Either two asterisks or two underscores, followed by any
+			// characters, followed by the same two starting characters.
 			pattern: /(\*\*|__)(.*?)\1/g,
 			replace: "<strong>$2</strong>",
+			type: INLINE,
 		},
 		{
 			// <em>
+			// Either one asterisk or one underscore, followed by any
+			// characters, followed by the starting character.
 			pattern: /(\*|_)(.*?)\1/g,
 			replace: "<em>$2</em>",
+			type: INLINE,
 		},
 		{
 			// <a>
+			// Not starting with an exclamation mark, square brackets
+			// surrounding any characters, followed by parenthesis surrounding
+			// any characters.
 			pattern: /([^!])\[([^\[]+)\]\(([^\)]+)\)/g,
 			replace: "$1<a href=\"$3\">$2</a>",
+			type: INLINE,
 		},
 		{
 			// <img>
+			// Starting with an exclamation mark, then followed by square
+			// brackets surrounding any characters, followed by parenthesis
+			// surrounding any characters.
 			pattern: /!\[([^\[]+)\]\(([^\)]+)\)/g,
 			replace: "<img src=\"$2\" alt=\"$1\" />",
+			type: INLINE,
 		},
 		{
 			// <del>
+			// Double tilde characters surrounding any characters.
 			pattern: /\~\~(.*?)\~\~/g,
 			replace: "<del>$1</del>",
-		}
+			type: INLINE,
+		},
+		{
+			// <blockquote>
+			// A greater-than character preceding any characters.
+			pattern: /\n(&gt;|\>)(.*)/g,
+			replace: "<blockquote>$1</blockquote>",
+			type: BLOCK,
+		},
 	],
 $$;
 
@@ -87,14 +118,40 @@ function parse(string) {
 	parseMap.forEach(function(p) {
 		// Replace all matches of provided RegExp pattern with either the
 		// replacement string or callback function.
-		string = string.replace(p.pattern, p.replace);
+		string = string.replace(p.pattern, function() {
+			// console.log(this, arguments);
+			return replace.call(this, arguments, p.replace, p.type);
+		});
 	});
 
 	// Trim for any spaces or newlines.
 	string = string.trim();
 	// Tidy up newlines to condense where more than 2 occur back to back.
-	string = string.replace(/[\n]{3,}/g, "\n\n");
+	// string = string.replace(/[\n]{3,}/g, "\n");
 	return string;
+}
+
+function replace(matchList, replacement, type) {
+	var
+		i,
+	$$;
+
+	for(i in matchList) {
+		if(!matchList.hasOwnProperty(i)) {
+			continue;
+		}
+
+		// Replace $n with the matching regexp group.
+		replacement = replacement.split("$" + i).join(matchList[i]);
+		// Replace $Ln with the matching regexp group's string length.
+		replacement = replacement.split("$L" + i).join(matchList[i].length);
+	}
+
+	if(type === BLOCK) {
+		replacement = replacement + "\n";
+	}
+
+	return replacement;
 }
 
 /**
