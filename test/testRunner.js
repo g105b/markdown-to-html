@@ -2,8 +2,9 @@
 var
 	fs = require("fs"),
 	test = require("tape"),
+	markdownToHtml = require(__dirname + "/../src/markdown-to-html.js"),
 
-	unitDirectory = "Markdown.mdtest",
+	unitDirectory = __dirname + "/Markdown.mdtest",
 $$;
 
 fs.readdir(unitDirectory, function(err, list) {
@@ -16,5 +17,8 @@ fs.readdir(unitDirectory, function(err, list) {
 });
 
 function executeTest(file) {
-	console.log(file);
+	test(file, function(t) {
+		t.equal("You are parsing: TEST!", markdownToHtml.parse("TEST!"));
+		t.end();
+	});
 }
