@@ -126,8 +126,8 @@ function parse(string) {
 
 	// Trim for any spaces or newlines.
 	string = string.trim();
-	// Tidy up newlines to condense where more than 2 occur back to back.
-	// string = string.replace(/[\n]{3,}/g, "\n");
+	// Tidy up newlines to condense where more than 1 occurs back to back.
+	string = string.replace(/[\n]{1,}/g, "\n");
 	return string;
 }
 
@@ -148,7 +148,7 @@ function replace(matchList, replacement, type) {
 	}
 
 	if(type === BLOCK) {
-		replacement = replacement + "\n";
+		replacement = replacement.trim() + "\n";
 	}
 
 	return replacement;
