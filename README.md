@@ -1,6 +1,8 @@
 # markdown-to-html
 The simplest pure JavaScript markdown parser
 
+[![CircleCI](https://img.shields.io/circleci/project/g105b/markdown-to-html.svg?style=flat-square)]
+
 ## Browser compatibility
 
 There is no need to use any module loader to start using this parser. Check out the following example for the simplest in-browser usage:
