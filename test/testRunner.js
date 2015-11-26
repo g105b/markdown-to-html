@@ -9,7 +9,7 @@ var
 
 	unitDirectory = [pathRoot, "test", "Markdown.mdtest"].join("/"),
 
-	TYPE_TEXT = "text",
+	TYPE_TEXT = "md",
 	TYPE_HTML = "html",
 $$;
 
@@ -29,7 +29,7 @@ function executeTest(file) {
 		basename = file.substr(0, lastDot),
 	$$;
 
-	if(ext !== "text") {
+	if(ext !== TYPE_TEXT) {
 		return;
 	}
 

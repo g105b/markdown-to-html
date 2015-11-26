@@ -14,6 +14,10 @@ var
 		{
 			pattern: /(\*\*|__)(.*?)\1/g,
 			replace: "<strong>$2</strong>",
+		},
+		{
+			pattern: /(\*|_)(.*?)\1/g,
+			replace: "<em>$2</em>",
 		}
 	],
 $$;
