@@ -45,6 +45,11 @@ var
 			pattern: /!\[([^\[]+)\]\(([^\)]+)\)/g,
 			replace: "<img src=\"$2\" alt=\"$1\" />",
 		},
+		{
+			// <del>
+			pattern: /\~\~(.*?)\~\~/g,
+			replace: "<del>$1</del>",
+		}
 	],
 $$;
 
