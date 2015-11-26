@@ -1,7 +1,7 @@
 # markdown-to-html
 The simplest pure JavaScript markdown parser
 
-![CircleCI](https://img.shields.io/circleci/project/g105b/markdown-to-html.svg?style=flat-square)
+[![CircleCI](https://img.shields.io/circleci/project/g105b/markdown-to-html.svg?style=flat-square)][circle-ci]
 
 ## Browser compatibility
 
@@ -48,5 +48,6 @@ Run the tests by executing:
 node test/testRunner.js
 ```
 
+[circle-ci]: https://circleci.com/gh/g105b/markdown-to-html
 [tape]: https://github.com/substack/tape
 [mdtest]: https://github.com/michelf/mdtest
