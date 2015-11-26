@@ -1,0 +1,7 @@
+machine:
+	node:
+		version: 0.10.25
+
+test:
+	override:
+		- node ./test/testRunner.js
