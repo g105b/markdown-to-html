@@ -1,10 +1,16 @@
 "use strict";
 var
+	pathRoot = [__dirname, ".."].join("/"),
+	scriptPath = [pathRoot, "src", "markdown-to-html.js"].join("/"),
+
 	fs = require("fs"),
 	test = require("tape"),
-	markdownToHtml = require(__dirname + "/../src/markdown-to-html.js"),
+	markdownToHtml = require(scriptPath),
 
-	unitDirectory = __dirname + "/Markdown.mdtest",
+	unitDirectory = [pathRoot, "test", "Markdown.mdtest"].join("/"),
+
+	TYPE_TEXT = "text",
+	TYPE_HTML = "xhtml",
 $$;
 
 fs.readdir(unitDirectory, function(err, list) {
@@ -17,8 +23,28 @@ fs.readdir(unitDirectory, function(err, list) {
 });
 
 function executeTest(file) {
-	test(file, function(t) {
-		t.equal("You are parsing: TEST!", markdownToHtml.parse("TEST!"));
+	var
+		lastDot = file.lastIndexOf("."),
+		ext = file.substr(lastDot + 1),
+		basename = file.substr(0, lastDot),
+	$$;
+
+	if(ext !== "text") {
+		return;
+	}
+
+	test(basename, function(t) {
+		var
+			mdContent = readFile(basename, TYPE_TEXT),
+			htmlContent = readFile(basename, TYPE_HTML),
+		$$;
+
+		t.equal(htmlContent, markdownToHtml.parse(mdContent));
 		t.end();
 	});
+}
+
+function readFile(basename, type) {
+	var path = [unitDirectory, basename].join("/") + "." + type;
+	return fs.readFileSync(path, "utf8");
 }
