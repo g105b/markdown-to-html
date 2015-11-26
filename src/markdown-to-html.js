@@ -2,6 +2,9 @@
 
 var
 	exports,
+	patternMap = {
+		paragraph: /\n([^\n]+)\n/g,
+	},
 $$;
 
 (function go() {
@@ -20,7 +23,28 @@ $$;
 })();
 
 function parse(string) {
-	return ["You are parsing: ", string].join("");
+	var
+		line,
+		// nstatus,
+		i = 0,
+		j = 0,
+		string = "\n" + string + "\n",
+		tmp,
+	$$;
+
+	while( (tmp = patternMap.paragraph.exec(string)) !== null) {
+		string = string.replace(
+			tmp[0],
+			[
+				"<p>",
+				tmp[1],
+				"</p>"
+			].join("")
+			+ "\n"
+		);
+	}
+
+	return string;
 }
 
 })();

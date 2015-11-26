@@ -36,10 +36,10 @@ function executeTest(file) {
 	test(basename, function(t) {
 		var
 			mdContent = readFile(basename, TYPE_TEXT),
-			htmlContent = readFile(basename, TYPE_HTML),
+			htmlContent = readFile(basename, TYPE_HTML).trim(),
 		$$;
 
-		t.equal(markdownToHtml.parse(mdContent), htmlContent);
+		t.equal(markdownToHtml.parse(mdContent).trim(), htmlContent);
 		t.end();
 	});
 }
