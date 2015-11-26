@@ -38,7 +38,9 @@ function parse(string) {
 		string = string.replace(p.pattern, p.replace);
 	});
 
-	return string.trim();
+	string = string.trim();
+	string = string.replace(/[\n]{3,}/, "\n\n");
+	return string;
 }
 
 function header(text, hashes, content) {
