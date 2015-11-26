@@ -16,24 +16,34 @@ var
 	 */
 	parseMap = [
 		{
+			// <h1>
 			pattern: /(#{1,6})(.*)/g,
 			replace: heading,
 		},
 		{
+			// <p>
 			pattern: /\n([^\n]+)\n/g,
 			replace: paragraph,
 		},
 		{
+			// <strong>
 			pattern: /(\*\*|__)(.*?)\1/g,
 			replace: "<strong>$2</strong>",
 		},
 		{
+			// <em>
 			pattern: /(\*|_)(.*?)\1/g,
 			replace: "<em>$2</em>",
 		},
 		{
-			pattern: /\[([^\[]+)\]\(([^\)]+)\)/g,
-			replace: "<a href=\"$2\">$1</a>",
+			// <a>
+			pattern: /([^!])\[([^\[]+)\]\(([^\)]+)\)/g,
+			replace: "$1<a href=\"$3\">$2</a>",
+		},
+		{
+			// <img>
+			pattern: /!\[([^\[]+)\]\(([^\)]+)\)/g,
+			replace: "<img src=\"$2\" alt=\"$1\" />",
 		},
 	],
 $$;
