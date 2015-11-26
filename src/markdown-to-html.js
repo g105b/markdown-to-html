@@ -9,8 +9,12 @@ var
 		},
 		{
 			pattern: /\n([^\n]+)\n/g,
-			replace: paragraph
+			replace: paragraph,
 		},
+		{
+			pattern: /(\*\*|__)(.*?)\1/g,
+			replace: "<strong>$2</strong>",
+		}
 	],
 $$;
 
