@@ -1,0 +1,1 @@
+What is an [inline anchor](http://www.w3.org/TR/html401/struct/links.html)?
