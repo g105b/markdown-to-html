@@ -10,7 +10,7 @@ var
 	unitDirectory = [pathRoot, "test", "Markdown.mdtest"].join("/"),
 
 	TYPE_TEXT = "text",
-	TYPE_HTML = "xhtml",
+	TYPE_HTML = "html",
 $$;
 
 fs.readdir(unitDirectory, function(err, list) {

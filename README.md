@@ -38,9 +38,9 @@ markdownToHtml.parse(markdown); // Returns: <h1>This is a heading</h1>
 
 ## Testing
 
-Unit tests are written using [tape]. The test runner file loops over all files within the Markdown.mdtest directory, based on the [mdtest] repository.
+Unit tests are written using [tape]. The test runner file loops over all files within the Markdown.mdtest directory.
 
-Within the Markdown.mdtest directory are multiple `.text` and `.xhtml` files with matching names. The contents of each `.text` file will be parsed and compared with the `.xhtml` counterpart.
+Within the Markdown.mdtest directory are multiple `.text` and `.html` files with matching names. The contents of each `.text` file will be parsed and compared with the `.html` counterpart.
 
 Run the tests by executing:
 
@@ -50,4 +50,3 @@ node test/testRunner.js
 
 [circle-ci]: https://circleci.com/gh/g105b/markdown-to-html
 [tape]: https://github.com/substack/tape
-[mdtest]: https://github.com/michelf/mdtest

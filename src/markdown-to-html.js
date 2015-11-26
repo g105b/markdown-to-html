@@ -2,9 +2,16 @@
 
 var
 	exports,
-	patternMap = {
-		paragraph: /\n([^\n]+)\n/g,
-	},
+	parseMap = [
+		{
+			pattern: /(#{1,6})(.*)/g,
+			replace: header,
+		},
+		{
+			pattern: /\n([^\n]+)\n/g,
+			replace: paragraph
+		},
+	],
 $$;
 
 (function go() {
@@ -24,27 +31,53 @@ $$;
 
 function parse(string) {
 	var
-		line,
-		// nstatus,
-		i = 0,
-		j = 0,
 		string = "\n" + string + "\n",
-		tmp,
 	$$;
 
-	while( (tmp = patternMap.paragraph.exec(string)) !== null) {
-		string = string.replace(
-			tmp[0],
-			[
-				"<p>",
-				tmp[1],
-				"</p>"
-			].join("")
-			+ "\n"
-		);
+	parseMap.forEach(function(p) {
+		string = string.replace(p.pattern, p.replace);
+	});
+
+	return string.trim();
+}
+
+function header(text, hashes, content) {
+	var tag = new Tag("h" + hashes.length);
+	return [tag.open(), content.trim(), tag.close(), "\n"].join("");
+}
+
+function paragraph(text, content) {
+	var
+		content = content.trim(),
+		tag = new Tag("p"),
+	$$;
+
+	if(/^<\/?/.test(content)) {
+		return ["\n", content, "\n"].join("");
 	}
 
-	return string;
+	return ["\n", tag.open(), content, tag.close(), "\n"].join("");
+}
+
+function Tag(tagName) {
+	function open() {
+		switch(tagName) {
+		default:
+			return ["<", tagName, ">"].join("");
+		}
+	}
+
+	function close() {
+		switch(tagName) {
+		default:
+			return ["</", tagName, ">"].join("");
+		}
+	}
+
+	return {
+		open: open,
+		close: close,
+	}
 }
 
 })();
