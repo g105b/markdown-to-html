@@ -39,7 +39,7 @@ function parse(string) {
 	});
 
 	string = string.trim();
-	string = string.replace(/[\n]{3,}/, "\n\n");
+	string = string.replace(/[\n]{3,}/g, "\n\n");
 	return string;
 }
 
