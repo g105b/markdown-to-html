@@ -35,15 +35,15 @@ var
 			// <p>
 			// Any line surrounded by newlines that doesn't start with
 			// an HTML tag, asterisk or numeric value with dot following.
-			pattern: /\n(?!<\/?\w+>|\s?\*|\s?[0-9]+)([^\n]+)/g,
+			pattern: /\n(?!<\/?\w+>|\s?\*|\s?[0-9]+|>|\&gt;)([^\n]+)/g,
 			replace: "<p>$1</p>",
 			type: BLOCK,
 		},
 		{
 			// <blockquote>
 			// A greater-than character preceding any characters.
-			pattern: /\n(&gt;|\>)(.*)/g,
-			replace: "<blockquote>$1</blockquote>",
+			pattern: /\n(?:\&gt;|>)\s*(.*)\n/g,
+			replace: "<blockquote><p>$1</p></blockquote>",
 			type: BLOCK,
 		},
 		{
@@ -179,6 +179,10 @@ function clean(string) {
 		{
 			match: /<\/([uo]l)>\s*<\1>/g,
 			replacement: "",
+		},
+		{
+			match: /(<\/\w+>)<\/(blockquote)>\s*<\2>/g,
+			replacement: "$1",
 		},
 	];
 
