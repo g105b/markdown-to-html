@@ -1,6 +1,12 @@
 ;(function() { "use strict";
 
 var
+	/**
+	 * The parsed output string, in HTML format.
+	 * @type {String}
+	 */
+	output = "",
+
 	BLOCK = "block",
 	INLINE = "inline",
 
@@ -28,9 +34,30 @@ var
 		{
 			// <p>
 			// Any line surrounded by newlines that doesn't start with
-			// an HTML tag.
-			pattern: /\n(?!<\/?\w+>)([^\n]+)\n/g,
+			// an HTML tag, asterisk or numeric value with dot following.
+			pattern: /\n(?!<\/?\w+>|\s?\*|\s?[0-9]+)([^\n]+)/g,
 			replace: "<p>$1</p>",
+			type: BLOCK,
+		},
+		{
+			// <blockquote>
+			// A greater-than character preceding any characters.
+			pattern: /\n(&gt;|\>)(.*)/g,
+			replace: "<blockquote>$1</blockquote>",
+			type: BLOCK,
+		},
+		{
+			// <ul>
+			//
+			pattern: /\n\s?\*\s*(.*)/g,
+			replace: "<ul>\n\t<li>$1</li>\n</ul>",
+			type: BLOCK,
+		},
+		{
+			// <ol>
+			//
+			pattern: /\n\s?[0-9]+\.\s*(.*)/g,
+			replace: "<ol>\n\t<li>$1</li>\n</ol>",
 			type: BLOCK,
 		},
 		{
@@ -74,13 +101,6 @@ var
 			replace: "<del>$1</del>",
 			type: INLINE,
 		},
-		{
-			// <blockquote>
-			// A greater-than character preceding any characters.
-			pattern: /\n(&gt;|\>)(.*)/g,
-			replace: "<blockquote>$1</blockquote>",
-			type: BLOCK,
-		},
 	],
 $$;
 
@@ -110,25 +130,25 @@ $$;
  * @return {string}        Transformed HTML output
  */
 function parse(string) {
-	var
-		// Pad with newlines for compatibility.
-		string = "\n" + string + "\n",
-	$$;
+	// Pad with newlines for compatibility.
+	output = "\n" + string + "\n";
 
 	parseMap.forEach(function(p) {
 		// Replace all matches of provided RegExp pattern with either the
 		// replacement string or callback function.
-		string = string.replace(p.pattern, function() {
+		output = output.replace(p.pattern, function() {
 			// console.log(this, arguments);
 			return replace.call(this, arguments, p.replace, p.type);
 		});
 	});
 
+	// Perform any post-processing required.
+	output = clean(output);
 	// Trim for any spaces or newlines.
-	string = string.trim();
+	output = output.trim();
 	// Tidy up newlines to condense where more than 1 occurs back to back.
-	string = string.replace(/[\n]{1,}/g, "\n");
-	return string;
+	output = output.replace(/[\n]{1,}/g, "\n");
+	return output;
 }
 
 function replace(matchList, replacement, type) {
@@ -154,59 +174,19 @@ function replace(matchList, replacement, type) {
 	return replacement;
 }
 
-/**
- * Replacement function for heading elements.
- * @param  {string} text    Original text including any markdown
- * @param  {string} hashes  String containing n hash characters
- * @param  {string} content Header text content
- * @return {string}         HTML representation of element
- */
-function heading(text, hashes, content) {
-	var tag = new Tag("h" + hashes.length);
-	return [tag.open(), content.trim(), tag.close(), "\n"].join("");
-}
+function clean(string) {
+	var cleaningRuleArray = [
+		{
+			match: /<\/([uo]l)>\s*<\1>/g,
+			replacement: "",
+		},
+	];
 
-/**
- * Replacement function for paragraph elements.
- * @param  {string} text    Original text including any markdown
- * @param  {string} content Paragraph text content
- * @return {string}         HTML representation of element
- */
-function paragraph(text, content) {
-	var
-		content = content.trim(),
-		tag = new Tag("p"),
-	$$;
+	cleaningRuleArray.forEach(function(rule) {
+		string = string.replace(rule.match, rule.replacement);
+	});
 
-	// Do not transform if the line starts with an HTML tag — already done!
-	if(/^<\/?\w+>/i.test(content)) {
-		// QUESTION: Would it help in any way to pad content with newlines?
-		// return ["\n", content, "\n"].join("");
-		return content;
-	}
-
-	return [tag.open(), content.trim(), tag.close(), "\n"].join("");
-}
-
-function Tag(tagName) {
-	function open() {
-		switch(tagName) {
-		default:
-			return ["<", tagName, ">"].join("");
-		}
-	}
-
-	function close() {
-		switch(tagName) {
-		default:
-			return ["</", tagName, ">"].join("");
-		}
-	}
-
-	return {
-		open: open,
-		close: close,
-	}
+	return string;
 }
 
 })();
