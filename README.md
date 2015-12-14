@@ -3,9 +3,11 @@ The simplest pure JavaScript markdown parser
 
 [![CircleCI](https://img.shields.io/circleci/project/g105b/markdown-to-html.svg?style=flat-square)][circle-ci]
 
-## Browser compatibility
+## Browser usage
 
-There is no need to use any module loader to start using this parser. Check out the following example for the simplest in-browser usage:
+### Plain JavaScript
+
+It is possible to use this parser in a web context without using any dependency management. Adding the source directly to a website source will attach the `MarkdownToHtml` object to the current `window`. Check out the following example for the simplest in-browser usage:
 
 ```html
 <!doctype html>
@@ -24,6 +26,10 @@ var element = document.getElementById("example-markdown-content");
 element.innerHTML = MarkdownToHtml.parse(element.innerHTML);
 </script>
 ```
+
+### Requiring with a dependency management tool
+
+/* TODO */
 
 ## Node compatibility
 
