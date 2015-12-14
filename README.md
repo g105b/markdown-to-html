@@ -3,6 +3,10 @@ The simplest pure JavaScript markdown parser
 
 [![CircleCI](https://img.shields.io/circleci/project/g105b/markdown-to-html.svg?style=flat-square)][circle-ci]
 
+## Project status
+
+Currently the project implements a bare minimum parser, through a set of regular expressions. All features are tested but some features of Markdown currently only have very basic support. See [CONTRIBUTING.md] for information on how to help enhance this project.
+
 ## Browser usage
 
 ### Plain JavaScript
