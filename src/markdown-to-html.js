@@ -101,6 +101,13 @@ var
 			replace: "<del>$1</del>",
 			type: INLINE,
 		},
+		{
+			// <code>
+			//
+			pattern: /`(.*?)`/g,
+			replace: "<code>$1</code>",
+			type: INLINE,
+		},
 	],
 $$;
 
