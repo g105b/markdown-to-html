@@ -36,17 +36,8 @@ var markdownToHtml = require("./src/markdown-to-html.js"),
 markdownToHtml.parse(markdown); // Returns: <h1>This is a heading</h1>
 ```
 
-## Testing
+# Contributing
 
-Unit tests are written using [tape]. The test runner file loops over all files within the Markdown.mdtest directory.
-
-Within the Markdown.mdtest directory are multiple `.text` and `.html` files with matching names. The contents of each `.text` file will be parsed and compared with the `.html` counterpart.
-
-Run the tests by executing:
-
-```
-node test/testRunner.js
-```
+Projects like this can't exist without help from the community. Please see [[CONTRIBUTING.md]] for information on how to contribute feature and fixes.
 
 [circle-ci]: https://circleci.com/gh/g105b/markdown-to-html
-[tape]: https://github.com/substack/tape
