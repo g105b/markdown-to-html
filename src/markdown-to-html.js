@@ -42,7 +42,7 @@ var
 		{
 			// <blockquote>
 			// A greater-than character preceding any characters.
-			pattern: /\n(?:\&gt;|>)\s*(.*)\n/g,
+			pattern: /\n(?:&gt;|\>)\W*(.*)/g,
 			replace: "<blockquote><p>$1</p></blockquote>",
 			type: BLOCK,
 		},
