@@ -47,3 +47,4 @@ markdownToHtml.parse(markdown); // Returns: <h1>This is a heading</h1>
 Projects like this can't exist without help from the community. Please see [[CONTRIBUTING.md]] for information on how to contribute feature and fixes.
 
 [circle-ci]: https://circleci.com/gh/g105b/markdown-to-html
+[CONTRIBUTING.md]: https://github.com/g105b/markdown-to-html/CONTRIBUTING.md
