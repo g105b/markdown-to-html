@@ -2,6 +2,8 @@
 
 Firstly, thank you for reading this document. The fact you're hear means that you have an interest in helping an open source project grow. Let's try and get you started as painlessly as possible.
 
+This project is not a real parser. Real parsers use techniques such as [Abstract Syntax Tree](AST)s to produce a structured understanding of a computer language. This project uses [regular expression](regexp)s to match strings of characters and replace them with others.
+
 ## Testing.
 
 Before a feature is implemented, a test case should be written to describe _how_ the feature _should_ work. Test cases for this project consist of simply two files:
@@ -50,4 +52,6 @@ Note that all commit messages follow these criteria:
 * Written in present tense. ("Test this, fix that" rather than "Tests this, fixes that").
 * References the issue by ID, directly after the first verb. This style is used by Github to automatically close the issue when the commit makes its way back to the `master` branch.
 
+[AST]: https://wikipedia.org/wiki/Abstract_syntax_tree
+[regexp]: https://wikipedia.org/wiki/Regular_expression
 [tape]: https://github.com/substack/tape
