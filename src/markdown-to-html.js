@@ -35,7 +35,7 @@ var
 			// <p>
 			// Any line surrounded by newlines that doesn't start with
 			// an HTML tag, asterisk or numeric value with dot following.
-			pattern: /\n(?!<\/?\w+>|\s?\*|\s?[0-9]+|>|\&gt;)([^\n]+)/g,
+			pattern: /\n(?!<\/?\w+>|\s?\*|\s?[0-9]+|>|\&gt;|-{5,})([^\n]+)/g,
 			replace: "<p>$1</p>",
 			type: BLOCK,
 		},
@@ -107,6 +107,13 @@ var
 			pattern: /`(.*?)`/g,
 			replace: "<code>$1</code>",
 			type: INLINE,
+		},
+		{
+			// <hr>
+			//
+			pattern: /\n-{5,}\n/g,
+			replace: "<hr />",
+			type: BLOCK,
 		},
 	],
 $$;
